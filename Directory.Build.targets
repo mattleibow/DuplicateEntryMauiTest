@@ -1,0 +1,31 @@
+<Project>
+
+	<!-- Remove .NET MAUI resources from the class library PRI -->
+	<!--
+	<Target
+		Name="_RemoveMauiPriFromPriFiles"
+		AfterTargets="_ComputeInputPriFiles"
+		Condition="
+			$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' and
+			'$(OutputType)' != 'WinExe' and '$(OutputType)' != 'Exe'">
+		<ItemGroup>
+			<_NuGetPriFile Include="@(_PriFile->HasMetadata('NuGetPackageId'))" />
+			<_MauiPriFile Include="@(_NuGetPriFile)" Condition="$([System.String]::Copy(%(NuGetPackageId)).StartsWith('Microsoft.Maui.'))" />
+			<_PriFile Remove="@(_MauiPriFile)" />
+		</ItemGroup>
+	</Target>
+	-->
+
+	<!-- Remove all dependencies' PRI files from the class library -->
+	<Target
+		Name="_RemoveDependencyPriFiles"
+		AfterTargets="_ComputeInputPriFiles"
+		Condition="
+			$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' and
+			'$(OutputType)' != 'WinExe' and '$(OutputType)' != 'Exe'">
+		<ItemGroup>
+			<_PriFile Remove="@(_PriFile)" />
+		</ItemGroup>
+	</Target>
+
+</Project>
